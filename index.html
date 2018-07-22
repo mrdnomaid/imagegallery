@@ -5,129 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Image Grid</title>
-  <style media="screen">
-    body {
-      background-color: #eee;
-      color: #121212;
-      font-family: 'Helvetica', sans-serif;
-    }
-
-    header {
-      background-color: #ddd;
-      padding: 8px;
-      border-bottom: 2px solid deepskyblue;
-      margin-bottom: 16px;
-    }
-
-    header h1 {
-      text-align: center;
-    }
-
-    main#images {
-      max-width: 100em;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    main#images div.img {
-      display: inline-block;
-      background-image: url('https://emojipedia-us.s3.amazonaws.com/thumbs/160/twitter/141/thinking-face_1f914.png');
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-color: #000;
-      /* Fiddle with these to change image sizes */
-      height: 256px;
-      width: 256px;
-      cursor: pointer;
-      border: 1px solid #fff;
-      border-radius: 4px;
-      transition: all 0.5s;
-    }
-
-    main#images div.img:hover {
-      box-shadow: 2px 2px 2px #000e;
-      transform: scale(1.1);
-    }
-
-    aside#modal {
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #000c;
-      width: 60vw;
-      height: 70vh;
-      transition: all 0.5s;
-      border-radius: 4px;
-    }
-
-    aside#modal a {
-      display: block;
-      width: 100%;
-      padding: 4px 0;
-      background-color: #a00c;
-      color: #efefef;
-      text-decoration: none;
-      text-align: center;
-      cursor: pointer;
-      border-bottom-left-radius: 4px;
-      border-bottom-right-radius: 4px;
-      transition: all 0.2s;
-    }
-
-    aside#modal a:hover {
-      background-color: #a00f;
-    }
-
-    aside#modal div#modal-image {
-      width: 100%;
-      height: 100%;
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: center;
-    }
-
-    aside#modal.hidden {
-      top: -100vh;
-    }
-
-    aside#modal.shown {
-      top: 10%;
-      z-index: 500;
-    }
-
-    aside#cover {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: #0005;
-      transition: opacity 0.5s;
-      z-index: 450;
-    }
-
-    aside#cover.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    aside#cover.shown {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    @media screen and (max-width: 1280px) {
-      aside#modal {
-        width: 90vw;
-        height: 80vh;
-      }
-
-      aside#modal a {
-        font-size: 2em;
-      }
-    }
-  </style>
-
+  <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
@@ -138,59 +16,14 @@
   </header>
 
   <main id="images"></main>
+  
   <aside id="modal" class="hidden">
     <div id="modal-image"></div>
     <a onclick="closeModal();">Close</a>
   </aside>
 
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
-  <script>
-    const imgCount = 100; // How many random demo images to get
-
-    const gridE = document.getElementById('images'); // The grid element
-    const modalE = document.getElementById('modal'); // The modal element
-    const modalImg = document.getElementById('modal-image'); // The modal image div
-    const coverE = document.getElementById('cover'); // Page cover element
-
-    // Init lazyloader
-    const loz = lozad();
-
-    let screenshots = []; // Array of image URLs
-    let toAdd = ''; // String of HTML housing images
-
-    // Add demo images to screenshot array
-    for (let i = 0; i < imgCount; i++) {
-      screenshots.push(`https://picsum.photos/${randInt(250,1000)}/${randInt(250,1000)}/?random`);
-    }
-
-    // Add every image to the HTML string
-    for (let p of screenshots) {
-      toAdd += `<div class="img lozad" data-background-image="${p}" onclick="openModal('${p}')"></div>\n`;
-    }
-
-    // Add the images HTML and start lazy loading
-    gridE.innerHTML = toAdd;
-    loz.observe();
-
-    function openModal(imageURL) {
-      modalE.classList.add('shown');
-      coverE.classList.add('shown');
-      modalE.classList.remove('hidden');
-      coverE.classList.remove('hidden');
-      modalImg.style.backgroundImage = `url('${imageURL}')`;
-    }
-
-    function closeModal() {
-      modalE.classList.add('hidden');
-      coverE.classList.add('hidden');
-      modalE.classList.remove('shown');
-      coverE.classList.remove('shown');
-    }
-
-    function randInt(min, max) {
-      return Math.floor(min + Math.random() * (max + 1 - min))
-    }
-  </script>
+  <script type="text/javascript" src="gal.js"></script>
 
 </body>
 
